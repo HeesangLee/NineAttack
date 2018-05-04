@@ -11,5 +11,8 @@
         2. Object 사라짐.
         3. 충돌 효과 : 충돌 지점을 시작점으로 해서 효과 구현
 - [ Coin ]
-    - 충돌 효과 :
+    -
 - [ Bullet ]
+
+- GameObject
+    - movement : 등속도외의 속도 적용 검토
