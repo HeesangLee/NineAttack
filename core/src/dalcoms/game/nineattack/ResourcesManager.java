@@ -27,6 +27,7 @@ public class ResourcesManager {
     private Texture texture_bullet2;
     private Texture texture_bullet3;
     private Texture texture_block;
+    private Texture texture_coin;
 
     private Array<Texture> textures_numInfoSmall;
 
@@ -49,6 +50,7 @@ public class ResourcesManager {
         texture_bullet3 = new Texture(Gdx.files.internal(assetFolderPrefix + "bullet3.png"));
 
         texture_block = new Texture(Gdx.files.internal(assetFolderPrefix + "block.png"));
+        texture_coin = new Texture(Gdx.files.internal(assetFolderPrefix + "coin.png"));
 
         textures_numInfoSmall = new Array<Texture>() {
             {
@@ -146,6 +148,10 @@ public class ResourcesManager {
         return texture_block;
     }
 
+    public Texture getTexture_coin() {
+        return texture_coin;
+    }
+
     public Texture getNumInfoSmall(int num) {
         return textures_numInfoSmall.get(num);
     }
@@ -169,6 +175,8 @@ public class ResourcesManager {
         texture_bullet3.dispose();
 
         texture_block.dispose();
+
+        texture_coin.dispose();
 
         for (Texture t : textures_numInfoSmall) {
             t.dispose();

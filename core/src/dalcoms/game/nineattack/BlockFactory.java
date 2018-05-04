@@ -17,6 +17,9 @@ public class BlockFactory {
     private Array<Block> blocks;
     private Array<Block> blockBank;
 
+    private Array<Coin> coins;
+    private Array<Coin> coinBank;
+
     private float timeBlockOnScreen = 10f;
     private float timeForNewBlock = timeBlockOnScreen / 25;
     private float secForNewBlockTimer = 0f;
@@ -32,6 +35,8 @@ public class BlockFactory {
         this.gameScreen = gameScreen;
         blocks = new Array<Block>();
         blockBank = new Array<Block>();
+        coins = new Array<Coin>();
+        coinBank = new Array<Coin>();
         screenHeight = game.gameConfig.getViewportHeight();
         trackLocationXs = game.gameConfig.getTrackLocationXs();
 
@@ -43,14 +48,21 @@ public class BlockFactory {
     public void render(float delta) {
         if (isFactoryRunning()) {
             if (isTimeToCheckNewBlock(delta)) {
-                checkNewBlocks();
+                checkNewMapItems();
             }
             renderBlocks(delta);
+            renderCoins(delta);
         }
     }
 
     private void renderBlocks(float delta) {
         for (Iterator<Block> it = blocks.iterator(); it.hasNext(); ) {
+            it.next().render(delta);
+        }
+    }
+
+    private void renderCoins(float delta) {
+        for (Iterator<Coin> it = coins.iterator(); it.hasNext(); ) {
             it.next().render(delta);
         }
     }
@@ -66,17 +78,25 @@ public class BlockFactory {
         return ret;
     }
 
-    private void checkNewBlocks() {
+    private void checkNewMapItems() {
 
         ItemTag[] temp = mapCreator.getMapArray().get(0);
         mapCreator.getMapArray().removeIndex(0);
         for (int i = 0; i < 9; i++) {
-            if(temp[i].getItemKind()==Item.ITEM_BLOCK){
+            if (temp[i].getItemKind() == Item.ITEM_BLOCK) {
                 Block tempBlock = getBlockFromBlockBank();
                 tempBlock.show(true);
                 tempBlock.setLocation(trackLocationXs[i], screenHeight);
                 tempBlock.moveY(screenHeight, 0, timeBlockOnScreen);
                 blocks.add(tempBlock);
+            } else if (temp[i].getItemKind() == Item.ITEM_COIN) {
+                Coin coin = new Coin(game.resourcesManager.getTexture_coin(),
+                        trackLocationXs[i], screenHeight)
+                        .setSpriteBatch(game.spriteBatch)
+                        .setResizeFactor(game.gameConfig.getResizeFactor());
+                coin.show(true);
+                coin.moveY(screenHeight, 0, timeBlockOnScreen);
+                coins.add(coin);
             }
         }
     }

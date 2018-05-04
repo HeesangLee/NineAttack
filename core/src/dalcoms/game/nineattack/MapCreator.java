@@ -90,14 +90,14 @@ public class MapCreator {
                             temp[xx] = new ItemTag(Item.ITEM_BLOCK);
                         }
                         safePathBulletOn = !safePathBulletOn;
-                    } else if (yy % 10 < 5) {
+                    } else if (yy % 10 < 3) {
                         temp[xx] = new ItemTag(Item.ITEM_COIN);
                     } else {
                         temp[xx] = new ItemTag(Item.ITEM_BLANK);
                     }
                 } else {
                     if (rand.nextBoolean()) {
-                        if (yy % 10 < 5) {
+                        if (yy % 10 < 7) {
                             temp[xx] = new ItemTag(Item.ITEM_BLANK);
                         } else {
                             temp[xx] = new ItemTag(Item.ITEM_COIN);
