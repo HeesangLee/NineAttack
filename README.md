@@ -1,5 +1,5 @@
-1. # NineAttack
+# NineAttack
 2D running game.
 
-## History
-
+## Note
+- 
