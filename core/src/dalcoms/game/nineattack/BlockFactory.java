@@ -17,8 +17,9 @@ public class BlockFactory {
     private Array<Block> blocks;
     private Array<Block> blockBank;
 
-    private Array<Coin> coins;
-    private Array<Coin> coinBank;
+    //    private Array<Coin> coins;
+//    private Array<Coin> coinBank;
+    private CoinFactory coinFactory;
 
     private float timeBlockOnScreen = 10f;
     private float timeForNewBlock = timeBlockOnScreen / 25;
@@ -35,8 +36,9 @@ public class BlockFactory {
         this.gameScreen = gameScreen;
         blocks = new Array<Block>();
         blockBank = new Array<Block>();
-        coins = new Array<Coin>();
-        coinBank = new Array<Coin>();
+
+        coinFactory = new CoinFactory(game, gameScreen)
+                .prepareBank(50);
         screenHeight = game.gameConfig.getViewportHeight();
         trackLocationXs = game.gameConfig.getTrackLocationXs();
 
@@ -62,9 +64,7 @@ public class BlockFactory {
     }
 
     private void renderCoins(float delta) {
-        for (Iterator<Coin> it = coins.iterator(); it.hasNext(); ) {
-            it.next().render(delta);
-        }
+        coinFactory.render(delta);
     }
 
 
@@ -80,25 +80,28 @@ public class BlockFactory {
 
     private void checkNewMapItems() {
 
-        ItemTag[] temp = mapCreator.getMapArray().get(0);
+        ItemTag[] newItem = mapCreator.getMapArray().get(0);
         mapCreator.getMapArray().removeIndex(0);
+
+        addNewBlockByMap(newItem);
+        addNewCoinByMap(newItem);
+
+    }
+
+    private void addNewBlockByMap(ItemTag[] itemTags){
         for (int i = 0; i < 9; i++) {
-            if (temp[i].getItemKind() == Item.ITEM_BLOCK) {
+            if (itemTags[i].getItemKind() == Item.ITEM_BLOCK) {
                 Block tempBlock = getBlockFromBlockBank();
                 tempBlock.show(true);
                 tempBlock.setLocation(trackLocationXs[i], screenHeight);
                 tempBlock.moveY(screenHeight, 0, timeBlockOnScreen);
                 blocks.add(tempBlock);
-            } else if (temp[i].getItemKind() == Item.ITEM_COIN) {
-                Coin coin = new Coin(game.resourcesManager.getTexture_coin(),
-                        trackLocationXs[i], screenHeight)
-                        .setSpriteBatch(game.spriteBatch)
-                        .setResizeFactor(game.gameConfig.getResizeFactor());
-                coin.show(true);
-                coin.moveY(screenHeight, 0, timeBlockOnScreen);
-                coins.add(coin);
             }
         }
+    }
+
+    private void addNewCoinByMap(ItemTag[] itemTags){
+        coinFactory.addCoinWithMap(itemTags,timeBlockOnScreen);
     }
 
     public void runFactory(boolean flagRun) {

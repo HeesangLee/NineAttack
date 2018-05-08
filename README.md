@@ -18,3 +18,6 @@
     - movement : 등속도외의 속도 적용 검토 (Andengine 참조)
 
 - Pool 기능을 갖는 Factory 를 만들고 → Block, Coin, Bullet 이 이를 상속하도록 구현
+
+##잡담
+- Thread를 구현하고는 run 을 안 했어... --> 당연히 run을 안 하지...하하하하하하

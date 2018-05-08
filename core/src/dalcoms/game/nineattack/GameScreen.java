@@ -239,17 +239,6 @@ public class GameScreen implements Screen {
         blockFactory.runFactory();
     }
 
-//    private void testBlock() {
-//        testBlock = new Block(game.resourcesManager.getTexture_block(),
-//                game.gameConfig.getTrackLocationX(4),
-//                game.gameConfig.getViewportHeight())
-//                .setSpriteBatch(game.spriteBatch).
-//                        setResizeFactor(game.gameConfig.getResizeFactor())
-//                .setBaseColor(GameColor.blockBase);
-//
-//        testBlock.show(true);
-//        testBlock.moveY(testBlock.getLocationY(), 0, 3f);
-//    }
 
     private void moveMeToInitialPosition() {
         me.moveY(me.getLocationY(), game.gameConfig.getResizeFactor() * 650f, 0.5f);
