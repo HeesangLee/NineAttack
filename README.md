@@ -19,5 +19,17 @@
 
 - Pool 기능을 갖는 Factory 를 만들고 → Block, Coin, Bullet 이 이를 상속하도록 구현
 
+##Todo
+> 항상 그렇지만 마무리가 안되고 있음.....
+- Coin collision : 부디치면 bank로 환원하고 점수 올리기
+
+
 ##잡담
 - Thread를 구현하고는 run 을 안 했어... --> 당연히 run을 안 하지...하하하하하하
+
+##API doc
+* ItemObject
+    * Collision detection with GameObject
+        1. checkCollideWithGameObject : 충돌 체크할 게임오브젝트 지정
+        2.isCollideWith() 으로 충돌 수동 체크
+        3. startCollideWith(), exitCollideWith() 를 overriding 해서 구현

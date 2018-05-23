@@ -1,5 +1,6 @@
 package dalcoms.game.nineattack;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Iterator;
@@ -44,7 +45,7 @@ public class BlockFactory {
 
         mapCreator = new MapCreator(9, 500, 4);
 
-        prepareBlockBank(50);
+        prepareBlockBank(100);
     }
 
     public void render(float delta) {
@@ -91,13 +92,24 @@ public class BlockFactory {
     private void addNewBlockByMap(ItemTag[] itemTags){
         for (int i = 0; i < 9; i++) {
             if (itemTags[i].getItemKind() == Item.ITEM_BLOCK) {
-                Block tempBlock = getBlockFromBlockBank();
+                final Block tempBlock = getBlockFromBlockBank();
                 tempBlock.show(true);
                 tempBlock.setLocation(trackLocationXs[i], screenHeight);
                 tempBlock.moveY(screenHeight, 0, timeBlockOnScreen);
+                tempBlock.addActionListener(new GameObjectActionListener() {
+                    @Override
+                    public boolean onMoveCompleted(boolean direction) {
+                        returnToBank(tempBlock);
+                        return false;
+                    }
+                });
                 blocks.add(tempBlock);
             }
         }
+
+        Gdx.app.log("pool", "BlockArray : " + String.valueOf(blocks.size)
+                + ", Bank : " + String.valueOf(blockBank.size) + ", T : " +
+                String.valueOf(blocks.size + blockBank.size));
     }
 
     private void addNewCoinByMap(ItemTag[] itemTags){
@@ -127,8 +139,14 @@ public class BlockFactory {
                 public void run() {
                     addBlockToBlockBank();
                 }
-            });
+            }).run();
         }
+    }
+
+    private void returnToBank(Block block) {
+        block.show(false);
+        blocks.removeValue(block, true);
+        blockBank.add(block);
     }
 
     private void addBlockToBlockBank() {
@@ -138,6 +156,8 @@ public class BlockFactory {
                 .setSpriteBatch(game.spriteBatch)
                 .setResizeFactor(game.gameConfig.getResizeFactor())
                 .setBaseColor(GameColor.blockBase));
+
+        Gdx.app.log("pool",  ", PreBank : " + String.valueOf(blockBank.size) );
     }
 
 

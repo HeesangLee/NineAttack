@@ -14,7 +14,7 @@ public class ItemObject extends GameObject implements Item {
 
     private GameObject collisionGameObject;
     private boolean flag_checkCollision = false;
-    private boolean isCollideWith = false;
+    private boolean flat_isCollideWith = false;
 
     public ItemObject(Texture texture, float locationX, float locationY) {
         super(texture, locationX, locationY);
@@ -28,11 +28,24 @@ public class ItemObject extends GameObject implements Item {
         super(width, height, locationX, locationY);
     }
 
+    /**
+     * Set if this itemObject will check collision with GameObject.
+     *
+     * @return void
+     * @para gameObject  GameObject to check collide with
+     * @para flagCheckCollision  flag if this will check collision or not
+     */
     public void checkCollideWithGameObject(GameObject gameObject, boolean flagCheckCollision) {
         collisionGameObject = gameObject;
         this.flag_checkCollision = flagCheckCollision;
     }
 
+    /**
+     * Set if this itemObject will check collision with GameObject.
+     *
+     * @return void
+     * @para flagCheckCollision  flag if this will check collision or not
+     */
     public void checkCollideWithGameObject(boolean flagCheckCollision) {
         if (collisionGameObject != null) {
             flag_checkCollision = flagCheckCollision;
@@ -67,27 +80,47 @@ public class ItemObject extends GameObject implements Item {
 
     private void checkCollideWith() {
         if (checkCollisionX() | checkCollisionY()) {
-            isCollideWith();
+            onCollidedWith();
         } else {
-            if (isCollideWith == true) {
-                isCollideWith = false;
-                exitCollideWidth();
+            if (isCollideWith() == true) {
+                setFlag_isCollideWith(false);
+                exitCollideWith();
             }
         }
     }
 
-    public void isCollideWith() {
-        if (isCollideWith == false) {
-            startCollideWidh();
+    private void onCollidedWith() {
+        if (isCollideWith() == false) {
+            startCollideWith();
         }
-        isCollideWith = true;
+        setFlag_isCollideWith(true);
     }
 
-    public void startCollideWidh() {
+    /**
+     * Return if this is collide with GameObject
+     * @return boolean of collision flag.
+     */
+
+    public boolean isCollideWith() {
+        return flat_isCollideWith;
+    }
+
+    private void setFlag_isCollideWith(boolean flag) {
+        flat_isCollideWith = flag;
+    }
+
+    /**
+     * Enter here when this start to collided with GameObject
+     */
+    public void startCollideWith() {
 
     }
 
-    public void exitCollideWidth() {
+    /**
+     * Enter here when this exit collision with GameObject
+     */
+
+    public void exitCollideWith() {
 
     }
 

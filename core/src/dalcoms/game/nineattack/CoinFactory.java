@@ -1,6 +1,5 @@
 package dalcoms.game.nineattack;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Iterator;
@@ -42,7 +41,7 @@ public class CoinFactory {
                 .setSpriteBatch(game.spriteBatch)
                 .setResizeFactor(game.gameConfig.getResizeFactor()));
 
-        Gdx.app.log("pool",  ", PreBank : " + String.valueOf(bank.size) );
+//        Gdx.app.log("pool",  ", PreBank : " + String.valueOf(bank.size) );
     }
 
     public Array<Coin> getCoin() {
@@ -80,9 +79,6 @@ public class CoinFactory {
                 coinArray.add(tempCoin);
             }
         }
-        Gdx.app.log("pool", "coinArray : " + String.valueOf(coinArray.size)
-                + ", Bank : " + String.valueOf(bank.size) + ", T : " +
-                String.valueOf(coinArray.size + bank.size));
     }
 
     private void returnToBank(Coin coin) {
@@ -100,6 +96,7 @@ public class CoinFactory {
         for (Iterator<Coin> it = coinArray.iterator(); it.hasNext(); ) {
             it.next().render(delta);
         }
+
     }
 
 }
