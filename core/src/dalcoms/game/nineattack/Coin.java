@@ -51,4 +51,5 @@ public class Coin extends ItemObject{
     private void drawSelf() {
         batch.draw(getTexture(), getLocationX(), getLocationY());
     }
+
 }

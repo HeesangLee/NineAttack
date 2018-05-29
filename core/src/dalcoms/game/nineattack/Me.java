@@ -93,6 +93,11 @@ public class Me extends GameObject {
         draw(delta);
     }
 
+    @Override
+    public float getLocationX() {
+        return super.getLocationX();
+    }
+
     private void draw(float delta) {
         if (isShow()) {
             drawMovingEffect(delta);

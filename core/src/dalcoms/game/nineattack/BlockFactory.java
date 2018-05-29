@@ -18,8 +18,6 @@ public class BlockFactory {
     private Array<Block> blocks;
     private Array<Block> blockBank;
 
-    //    private Array<Coin> coins;
-//    private Array<Coin> coinBank;
     private CoinFactory coinFactory;
 
     private float timeBlockOnScreen = 10f;
@@ -89,7 +87,7 @@ public class BlockFactory {
 
     }
 
-    private void addNewBlockByMap(ItemTag[] itemTags){
+    private void addNewBlockByMap(ItemTag[] itemTags) {
         for (int i = 0; i < 9; i++) {
             if (itemTags[i].getItemKind() == Item.ITEM_BLOCK) {
                 final Block tempBlock = getBlockFromBlockBank();
@@ -112,8 +110,8 @@ public class BlockFactory {
                 String.valueOf(blocks.size + blockBank.size));
     }
 
-    private void addNewCoinByMap(ItemTag[] itemTags){
-        coinFactory.addCoinWithMap(itemTags,timeBlockOnScreen);
+    private void addNewCoinByMap(ItemTag[] itemTags) {
+        coinFactory.addCoinWithMap(itemTags, timeBlockOnScreen);
     }
 
     public void runFactory(boolean flagRun) {
@@ -143,10 +141,23 @@ public class BlockFactory {
         }
     }
 
-    private void returnToBank(Block block) {
+    private void returnToBank(final Block block) {
         block.show(false);
-        blocks.removeValue(block, true);
-        blockBank.add(block);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        blocks.removeValue(block, true);
+                        blockBank.add(block);
+                    }
+                });
+            }
+        }).start();
+//        blocks.removeValue(block, true);
+//        blockBank.add(block);
     }
 
     private void addBlockToBlockBank() {
@@ -157,7 +168,7 @@ public class BlockFactory {
                 .setResizeFactor(game.gameConfig.getResizeFactor())
                 .setBaseColor(GameColor.blockBase));
 
-        Gdx.app.log("pool",  ", PreBank : " + String.valueOf(blockBank.size) );
+        Gdx.app.log("pool", ", PreBank : " + String.valueOf(blockBank.size));
     }
 
 

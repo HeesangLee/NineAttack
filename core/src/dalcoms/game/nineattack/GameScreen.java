@@ -41,8 +41,8 @@ public class GameScreen implements Screen {
     public void show() {
         gameObjects = new Array<GameObject>();
 
-        initBlockFactory();
         initGameObjects();
+        initBlockFactory();
 
         initInputProcessor();
     }
@@ -297,5 +297,9 @@ public class GameScreen implements Screen {
                 return isGameStarted();
             }
         }));
+    }
+
+    public GameObject getMeGameObject(){
+        return me;
     }
 }

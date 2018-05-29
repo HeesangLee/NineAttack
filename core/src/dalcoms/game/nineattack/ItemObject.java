@@ -79,7 +79,7 @@ public class ItemObject extends GameObject implements Item {
     }
 
     private void checkCollideWith() {
-        if (checkCollisionX() | checkCollisionY()) {
+        if (checkCollisionX() & checkCollisionY()) {
             onCollidedWith();
         } else {
             if (isCollideWith() == true) {
@@ -98,6 +98,7 @@ public class ItemObject extends GameObject implements Item {
 
     /**
      * Return if this is collide with GameObject
+     *
      * @return boolean of collision flag.
      */
 
