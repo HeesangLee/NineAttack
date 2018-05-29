@@ -22,7 +22,8 @@
 - Array 에 있는 Object 들을 추가/제거 하고 iterator 로 render --> Draw 할 경우 Flicking(깜빡임 증상) 있음
     - LibGdx 의 OpenGL thread 와 동기화 안 되어 있어서 생기는 문제 같음....
     - 해결방법 :  Remove 를 Thread 동기화 시킴
-'new Thread(new Runnable() {
+'''java
+new Thread(new Runnable() {
                  @Override
                  public void run() {
                      Gdx.app.postRunnable(new Runnable() {
@@ -33,7 +34,8 @@
                          }
                      });
                  }
-             }).start();'
+             }).start();
+             '''
 
 
 ##Todo
